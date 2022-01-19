@@ -4,8 +4,7 @@ provider "aws" {
 
 resource "aws_s3_bucket" "terraform_state" {
 
-  bucket = "terraform-state-bucket-gcampoverde"
-
+  bucket        = "terraform-state-bucket-gc593"
   #Prevent accidental deletion of this S3 Bucket
   # lifecycle {
   #   prevent_destroy = true
@@ -41,8 +40,8 @@ resource "aws_dynamodb_table" "terraform_locks" {
 # $terraform init
 terraform {
   backend "s3" {
-    bucket = "terraform-state-bucket-gcampoverde"
-    key    = "example/terraform.tfstate"
+    bucket = "terraform-state-bucket-gc593"
+    key    = "workspace-example/terraform.tfstate"
     region = "us-east-2"
 
     dynamodb_table = "terraform-up-and-running-locks"
@@ -61,6 +60,12 @@ terraform {
 
 #   }
 # }
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+}
+
 
 output "s3_bucket_arn" {
   value       = aws_s3_bucket.terraform_state.arn

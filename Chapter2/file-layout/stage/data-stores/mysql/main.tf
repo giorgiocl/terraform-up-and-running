@@ -24,6 +24,7 @@ resource "aws_db_instance" "example" {
   instance_class    = "db.t2.micro"
   name              = "example_database"
   username          = "admin"
+  skip_final_snapshot = "true"
 
 
   password = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["password"]
